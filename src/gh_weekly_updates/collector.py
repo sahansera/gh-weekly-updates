@@ -332,6 +332,11 @@ def collect_activity(
                         review_comments=pr_detail.get("review_comments", 0),
                     )
                 )
+        except httpx.HTTPStatusError as e:
+            if e.response.status_code in (404, 422):
+                log.warning("Skipping PRs authored for %s (HTTP %d — token may lack access)", repo, e.response.status_code)
+            else:
+                log.exception("Error fetching PRs authored for %s", repo)
         except Exception:
             log.exception("Error fetching PRs authored for %s", repo)
 
@@ -370,6 +375,11 @@ def collect_activity(
                                     body=rev.get("body"),
                                 )
                             )
+        except httpx.HTTPStatusError as e:
+            if e.response.status_code in (404, 422):
+                log.warning("Skipping reviews for %s (HTTP %d — token may lack access)", repo, e.response.status_code)
+            else:
+                log.exception("Error fetching reviews for %s", repo)
         except Exception:
             log.exception("Error fetching reviews for %s", repo)
 
@@ -392,6 +402,11 @@ def collect_activity(
                         comments=item.get("comments", 0),
                     )
                 )
+        except httpx.HTTPStatusError as e:
+            if e.response.status_code in (404, 422):
+                log.warning("Skipping issues for %s (HTTP %d — token may lack access)", repo, e.response.status_code)
+            else:
+                log.exception("Error fetching issues for %s", repo)
         except Exception:
             log.exception("Error fetching issues for %s", repo)
 
@@ -422,6 +437,11 @@ def collect_activity(
                         created_at=created_at,
                     )
                 )
+        except httpx.HTTPStatusError as e:
+            if e.response.status_code in (404, 422):
+                log.warning("Skipping issue comments for %s (HTTP %d — token may lack access)", repo, e.response.status_code)
+            else:
+                log.exception("Error fetching issue comments for %s", repo)
         except Exception:
             log.exception("Error fetching issue comments for %s", repo)
 

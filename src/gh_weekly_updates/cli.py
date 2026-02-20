@@ -228,7 +228,7 @@ def main(
     # --- Push to repo ---
     if push_repo:
         with console.status(f"[bold green]Pushing to {push_repo}..."):
-            publish_to_repo(summary, push_repo, since_dt, until_dt)
+            publish_to_repo(summary, push_repo, since_dt, until_dt, token=token, username=username)
         console.print(
             f"\n[bold green]Pushed to https://github.com/{push_repo}/tree/main/weekly-updates[/bold green]"
         )

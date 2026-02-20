@@ -16,6 +16,8 @@ def publish_to_repo(
     push_repo: str,
     since: datetime,
     until: datetime,
+    token: str | None = None,
+    username: str | None = None,
 ) -> None:
     """Clone the target repo, write the summary under weekly-updates/, commit, and push.
 
@@ -24,16 +26,30 @@ def publish_to_repo(
         push_repo: Repo in "owner/name" format (e.g. "user/my-updates").
         since: Start date of the summary period.
         until: End date of the summary period.
+        token: GitHub token for HTTPS auth (required in CI).
+        username: GitHub username for commit author (optional).
     """
     filename = f"impact-{since.strftime('%Y-%m-%d')}-to-{until.strftime('%Y-%m-%d')}.md"
     target_dir = "weekly-updates"
 
     with tempfile.TemporaryDirectory(prefix="gh-weekly-updates-") as tmpdir:
-        repo_url = f"https://github.com/{push_repo}.git"
+        # Embed token in URL for HTTPS auth (required in CI / non-interactive)
+        if token:
+            repo_url = f"https://x-access-token:{token}@github.com/{push_repo}.git"
+        else:
+            repo_url = f"https://github.com/{push_repo}.git"
         repo_path = Path(tmpdir) / "repo"
 
         log.info("Cloning %s", push_repo)
         _run_git(["clone", "--depth", "1", repo_url, str(repo_path)])
+
+        # Configure git user for the commit
+        author = username or "gh-weekly-updates"
+        _run_git(["config", "user.name", author], cwd=repo_path)
+        _run_git(
+            ["config", "user.email", f"{author}@users.noreply.github.com"],
+            cwd=repo_path,
+        )
 
         # Ensure weekly-updates/ exists
         dest_dir = repo_path / target_dir
