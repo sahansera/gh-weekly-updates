@@ -1,0 +1,12 @@
+.venv/
+__pycache__/
+*.egg-info/
+dist/
+build/
+*.pyc
+.ruff_cache/
+.pytest_cache/
+
+# Personal config (use config.example.yaml as template)
+config.yaml
+impact-*.md

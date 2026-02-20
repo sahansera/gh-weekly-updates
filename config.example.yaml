@@ -1,0 +1,24 @@
+# gh-weekly-updates configuration example
+# Copy this file to config.yaml and customise.
+
+# GitHub org to scope repo discovery to (optional)
+# org: my-org
+
+# GitHub Model to use for summarisation
+model: openai/gpt-4.1
+
+# Push summary to this repo under weekly-updates/ (optional)
+# push_repo: owner/my-updates-repo
+
+# Repos to collect activity from (skips auto-discovery when set)
+# repos:
+#   - owner/repo-a
+#   - owner/repo-b
+
+# Custom system prompt for the AI summariser (optional)
+# You can inline it here or point to a file with prompt_file.
+# prompt: |
+#   You are an engineering manager writing a weekly summary...
+
+# Path to a custom prompt file (optional, overrides prompt above)
+# prompt_file: prompt.txt
