@@ -36,3 +36,8 @@ All notable changes to this project will be documented in this file.
 - Push summary to a GitHub repo under `weekly-updates/`
 - Rich terminal output with progress indicators
 - CLI with `--since`, `--until`, `--org`, `--repos`, `--push`, `--output`, `--model`, `--config`, `--verbose`
+
+[0.1.3]: https://github.com/sahansera/gh-weekly-updates/compare/v0.1.2...v0.1.3
+[0.1.2]: https://github.com/sahansera/gh-weekly-updates/compare/v0.1.1...v0.1.2
+[0.1.1]: https://github.com/sahansera/gh-weekly-updates/compare/v0.1.0...v0.1.1
+[0.1.0]: https://github.com/sahansera/gh-weekly-updates/releases/tag/v0.1.0

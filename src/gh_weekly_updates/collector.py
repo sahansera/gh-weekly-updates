@@ -8,7 +8,7 @@ from datetime import datetime
 
 import httpx
 
-from gh_weekly_updates.config import _auth_headers
+from gh_weekly_updates.config import auth_headers
 from gh_weekly_updates.models import (
     Discussion,
     DiscussionComment,
@@ -45,7 +45,7 @@ def _search_issues(
     """Run a GitHub search/issues query with date range and pagination."""
     date_range = f"{since.strftime('%Y-%m-%d')}..{until.strftime('%Y-%m-%d')}"
     full_query = f"{query} created:{date_range}"
-    headers = _auth_headers(token)
+    headers = auth_headers(token)
 
     results: list[dict] = []
     page = 1
@@ -79,7 +79,7 @@ def _search_issues_updated(
     """Search with 'updated' instead of 'created' date range."""
     date_range = f"{since.strftime('%Y-%m-%d')}..{until.strftime('%Y-%m-%d')}"
     full_query = f"{query} updated:{date_range}"
-    headers = _auth_headers(token)
+    headers = auth_headers(token)
 
     results: list[dict] = []
     page = 1
@@ -107,7 +107,7 @@ def _search_issues_updated(
 def _fetch_pr_details(token: str, repo: str, number: int) -> dict:
     """Fetch full PR details (additions, deletions, etc.)."""
     url = f"https://api.github.com/repos/{repo}/pulls/{number}"
-    resp = httpx.get(url, headers=_auth_headers(token), timeout=30)
+    resp = httpx.get(url, headers=auth_headers(token), timeout=30)
     resp.raise_for_status()
     _sleep_for_rate_limit(resp)
     return resp.json()
@@ -118,7 +118,7 @@ def _fetch_reviews_for_pr(token: str, repo: str, pr_number: int) -> list[dict]:
     url = f"https://api.github.com/repos/{repo}/pulls/{pr_number}/reviews"
     resp = httpx.get(
         url,
-        headers=_auth_headers(token),
+        headers=auth_headers(token),
         params={"per_page": PER_PAGE},
         timeout=30,
     )
@@ -135,7 +135,7 @@ def _fetch_issue_comments_by_user(
 ) -> list[dict]:
     """Fetch issue comments by a specific user in a repo since a date."""
     url = f"https://api.github.com/repos/{repo}/issues/comments"
-    headers = _auth_headers(token)
+    headers = auth_headers(token)
     results: list[dict] = []
     page = 1
 
@@ -207,7 +207,7 @@ def _fetch_discussions(
 ) -> tuple[list[Discussion], list[DiscussionComment]]:
     """Fetch discussions where the user is author or commenter."""
     owner, name = repo.split("/", 1)
-    headers = _auth_headers(token)
+    headers = auth_headers(token)
     created: list[Discussion] = []
     commented: list[DiscussionComment] = []
     cursor = None

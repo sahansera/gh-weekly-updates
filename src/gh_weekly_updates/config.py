@@ -51,14 +51,14 @@ def get_github_username(token: str) -> str:
 
     resp = httpx.get(
         "https://api.github.com/user",
-        headers=_auth_headers(token),
+        headers=auth_headers(token),
         timeout=10,
     )
     resp.raise_for_status()
     return resp.json()["login"]
 
 
-def _auth_headers(token: str) -> dict[str, str]:
+def auth_headers(token: str) -> dict[str, str]:
     return {
         "Authorization": f"Bearer {token}",
         "Accept": "application/vnd.github+json",

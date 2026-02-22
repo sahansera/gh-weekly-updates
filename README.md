@@ -9,7 +9,7 @@
 - **Auto-discover repos** via the GitHub GraphQL Contributions API, or provide an explicit list
 - **Collect detailed activity**: PRs, reviews, issues, issue comments, discussions
 - **AI-powered summarisation** via GitHub Models (`openai/gpt-4.1` by default)
-- **Structured output**: Wins / Strategic Influence / Challenges with inline links
+- **Structured output**: Wins / Challenges / What's Next — grouped by project or theme, with inline links
 - **Push to a repo**: automatically commit summaries to a GitHub repo for sharing
 - **Fully configurable**: org, repos, model, prompt — via YAML config or CLI flags
 - **Custom prompts**: tailor the AI summary to your team's format
@@ -25,7 +25,9 @@ pip install gh-weekly-updates
 - Python 3.11+
 - A GitHub personal access token (PAT) **or** the [GitHub CLI](https://cli.github.com/) (`gh`) authenticated
   - Required scopes: `repo`, `read:org`
-  - The token also needs access to [GitHub Models](https://github.com/marketplace/models) for AI summarisation
+- Access to [GitHub Models](https://github.com/marketplace/models) for AI summarisation
+  - Your GitHub account must have GitHub Models enabled. Visit the [Models marketplace](https://github.com/marketplace/models) to check access.
+  - The same PAT / `gh` token is used to authenticate with the Models inference endpoint — no separate API key needed.
 
 ## Quick start
 
@@ -122,7 +124,7 @@ jobs:
 
       - name: Generate summary
         env:
-          GITHUB_TOKEN: ${{ secrets.GH_PAT }}
+          GITHUB_TOKEN: ${{ secrets.GH_PAT }}  # must be named GITHUB_TOKEN
         run: |
           gh-weekly-updates \
             --config config.yaml \

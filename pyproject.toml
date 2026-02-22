@@ -9,6 +9,9 @@ description = "Automatically discover and summarise your weekly GitHub impact"
 requires-python = ">=3.11"
 readme = "README.md"
 license = {text = "MIT"}
+authors = [
+    {name = "Sahan Serasinghe", email = "sahan.serasinghe@gmail.com"},
+]
 keywords = ["github", "weekly", "impact", "summary", "engineering"]
 classifiers = [
     "Development Status :: 4 - Beta",
@@ -39,6 +42,7 @@ dev = [
 Homepage = "https://github.com/sahansera/gh-weekly-updates"
 Repository = "https://github.com/sahansera/gh-weekly-updates"
 Issues = "https://github.com/sahansera/gh-weekly-updates/issues"
+Changelog = "https://github.com/sahansera/gh-weekly-updates/blob/main/CHANGELOG.md"
 
 [project.scripts]
 gh-weekly-updates = "gh_weekly_updates.cli:main"

@@ -7,7 +7,7 @@ from datetime import datetime
 
 import httpx
 
-from gh_weekly_updates.config import _auth_headers
+from gh_weekly_updates.config import auth_headers
 
 log = logging.getLogger(__name__)
 
@@ -60,7 +60,7 @@ def discover_repos(
     resp = httpx.post(
         GRAPHQL_URL,
         json={"query": CONTRIBUTIONS_QUERY, "variables": variables},
-        headers=_auth_headers(token),
+        headers=auth_headers(token),
         timeout=30,
     )
     resp.raise_for_status()

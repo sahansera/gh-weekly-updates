@@ -7,6 +7,11 @@ build/
 .ruff_cache/
 .pytest_cache/
 
+.env
+.DS_Store
+*.egg
+*.log
+
 # Personal config (use config.example.yaml as template)
 config.yaml
 impact-*.md
