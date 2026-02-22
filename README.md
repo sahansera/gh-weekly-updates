@@ -1,4 +1,4 @@
-# gh-weekly-updates
+# GitHub Weekly Updates
 
 > Automatically discover and summarise your weekly GitHub impact using AI.
 
