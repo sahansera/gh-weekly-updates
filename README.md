@@ -1,8 +1,34 @@
 # GitHub Weekly Updates
 
+[![PyPI version](https://img.shields.io/pypi/v/gh-weekly-updates?color=blue&label=PyPI)](https://pypi.org/project/gh-weekly-updates/)
+[![Python](https://img.shields.io/pypi/pyversions/gh-weekly-updates)](https://pypi.org/project/gh-weekly-updates/)
+[![CI](https://github.com/sahansera/gh-weekly-updates/actions/workflows/ci.yml/badge.svg)](https://github.com/sahansera/gh-weekly-updates/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+
 > Automatically discover and summarise your weekly GitHub impact using AI.
 
-`gh-weekly-updates` collects your GitHub activity — pull requests authored & reviewed, issues created & commented on, discussions — and generates a structured Markdown summary using [GitHub Models](https://github.com/marketplace/models).
+`gh-weekly-updates` collects your GitHub activity - pull requests authored & reviewed, issues created & commented on, discussions - and generates a structured Markdown summary using [GitHub Models](https://github.com/marketplace/models).
+
+### Example Output
+
+```
+# Weekly Update - octocat (2026-02-09 -> 2026-02-16)
+
+## 🏆 Wins
+### API Service
+- Merged #142 to add request batching, reducing API calls by 60%
+- Fixed #138 race condition in webhook delivery
+
+## ⚡ Challenges
+### Infrastructure
+- Migration to new auth provider (#145) blocked on SSO configuration
+
+## 🔮 What's Next
+### API Service
+- #150 (open) - Add retry logic for failed webhook deliveries
+
+📊 5 PRs authored, 3 PRs reviewed, 4 issues created
+```
 
 ## Features
 
