@@ -151,7 +151,7 @@ def main(
         format="%(message)s",
         handlers=[RichHandler(rich_tracebacks=True, show_path=False)],
     )
-    log = logging.getLogger("gh_weekly_updates")
+    logging.getLogger("gh_weekly_updates")
 
     # --- Auth ---
     with console.status("[bold green]Authenticating with GitHub..."):
@@ -230,7 +230,8 @@ def main(
         with console.status(f"[bold green]Pushing to {push_repo}..."):
             publish_to_repo(summary, push_repo, since_dt, until_dt, token=token, username=user)
         console.print(
-            f"\n[bold green]Pushed to https://github.com/{push_repo}/tree/main/weekly-updates[/bold green]"
+            f"\n[bold green]Pushed to "
+            f"https://github.com/{push_repo}/tree/main/weekly-updates[/bold green]"
         )
 
 

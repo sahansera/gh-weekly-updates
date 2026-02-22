@@ -133,9 +133,7 @@ class WeeklyActivity(BaseModel):
         if self.prs_reviewed:
             sections.append("### Pull Requests Reviewed")
             for r in self.prs_reviewed:
-                sections.append(
-                    f"- [{r.repo}#{r.pr_number}]({r.pr_url}) {r.pr_title} — {r.state}"
-                )
+                sections.append(f"- [{r.repo}#{r.pr_number}]({r.pr_url}) {r.pr_title} — {r.state}")
                 if r.body:
                     body_preview = r.body[:300].replace("\n", " ")
                     sections.append(f"  Review comment: {body_preview}")
@@ -158,9 +156,7 @@ class WeeklyActivity(BaseModel):
             sections.append("### Issue Comments")
             for c in self.issue_comments:
                 body_preview = c.body[:300].replace("\n", " ")
-                sections.append(
-                    f"- [{c.repo}#{c.issue_number}]({c.issue_url}) {c.issue_title}"
-                )
+                sections.append(f"- [{c.repo}#{c.issue_number}]({c.issue_url}) {c.issue_title}")
                 sections.append(f"  Comment: {body_preview}")
             sections.append("")
 
@@ -168,9 +164,7 @@ class WeeklyActivity(BaseModel):
             sections.append("### Discussions Created")
             for d in self.discussions_created:
                 cat = f" ({d.category})" if d.category else ""
-                sections.append(
-                    f"- [{d.repo}#{d.number}]({d.url}) {d.title}{cat}"
-                )
+                sections.append(f"- [{d.repo}#{d.number}]({d.url}) {d.title}{cat}")
                 if d.body:
                     body_preview = d.body[:300].replace("\n", " ")
                     sections.append(f"  Body: {body_preview}")
@@ -181,8 +175,7 @@ class WeeklyActivity(BaseModel):
             for c in self.discussion_comments:
                 body_preview = c.body[:300].replace("\n", " ")
                 sections.append(
-                    f"- [{c.repo}#{c.discussion_number}]({c.discussion_url}) "
-                    f"{c.discussion_title}"
+                    f"- [{c.repo}#{c.discussion_number}]({c.discussion_url}) {c.discussion_title}"
                 )
                 sections.append(f"  Comment: {body_preview}")
             sections.append("")

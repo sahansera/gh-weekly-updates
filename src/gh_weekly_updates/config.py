@@ -38,8 +38,7 @@ def get_github_token() -> str:
         pass
 
     print(
-        "Error: No GitHub token found.\n"
-        "Either set GITHUB_TOKEN or run `gh auth login` first.",
+        "Error: No GitHub token found.\nEither set GITHUB_TOKEN or run `gh auth login` first.",
         file=sys.stderr,
     )
     sys.exit(1)

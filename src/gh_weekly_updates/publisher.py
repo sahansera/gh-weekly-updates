@@ -63,9 +63,7 @@ def publish_to_repo(
         # Git add, commit, push
         _run_git(["add", f"{target_dir}/{filename}"], cwd=repo_path)
 
-        commit_msg = (
-            f"weekly-updates: {since.strftime('%Y-%m-%d')} → {until.strftime('%Y-%m-%d')}"
-        )
+        commit_msg = f"weekly-updates: {since.strftime('%Y-%m-%d')} → {until.strftime('%Y-%m-%d')}"
         _run_git(["commit", "-m", commit_msg], cwd=repo_path)
         _run_git(["push"], cwd=repo_path)
 

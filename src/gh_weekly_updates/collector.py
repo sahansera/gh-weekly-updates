@@ -262,9 +262,7 @@ def _fetch_discussions(
             for comment in (node.get("comments") or {}).get("nodes", []):
                 comment_author = (comment.get("author") or {}).get("login", "")
                 if comment_author == username:
-                    comment_at = datetime.fromisoformat(
-                        comment["createdAt"].replace("Z", "+00:00")
-                    )
+                    comment_at = datetime.fromisoformat(comment["createdAt"].replace("Z", "+00:00"))
                     if since <= comment_at <= until:
                         commented.append(
                             DiscussionComment(
@@ -310,9 +308,7 @@ def collect_activity(
 
         # --- PRs authored ---
         try:
-            pr_items = _search_issues(
-                token, f"author:{username} repo:{repo} type:pr", since, until
-            )
+            pr_items = _search_issues(token, f"author:{username} repo:{repo} type:pr", since, until)
             for item in pr_items:
                 pr_detail = _fetch_pr_details(token, repo, item["number"])
                 activity.prs_authored.append(
@@ -328,13 +324,17 @@ def collect_activity(
                         additions=pr_detail.get("additions", 0),
                         deletions=pr_detail.get("deletions", 0),
                         changed_files=pr_detail.get("changed_files", 0),
-                        labels=[l["name"] for l in item.get("labels", [])],
+                        labels=[lb["name"] for lb in item.get("labels", [])],
                         review_comments=pr_detail.get("review_comments", 0),
                     )
                 )
         except httpx.HTTPStatusError as e:
             if e.response.status_code in (404, 422):
-                log.warning("Skipping PRs authored for %s (HTTP %d — token may lack access)", repo, e.response.status_code)
+                log.warning(
+                    "Skipping PRs authored for %s (HTTP %d — token may lack access)",
+                    repo,
+                    e.response.status_code,
+                )
             else:
                 log.exception("Error fetching PRs authored for %s", repo)
         except Exception:
@@ -354,15 +354,12 @@ def collect_activity(
                 user_reviews = [
                     r
                     for r in reviews
-                    if r.get("user", {}).get("login") == username
-                    and r.get("state") != "PENDING"
+                    if r.get("user", {}).get("login") == username and r.get("state") != "PENDING"
                 ]
                 for rev in user_reviews:
                     submitted = rev.get("submitted_at")
                     if submitted:
-                        submitted_dt = datetime.fromisoformat(
-                            submitted.replace("Z", "+00:00")
-                        )
+                        submitted_dt = datetime.fromisoformat(submitted.replace("Z", "+00:00"))
                         if since <= submitted_dt <= until:
                             activity.prs_reviewed.append(
                                 Review(
@@ -377,7 +374,11 @@ def collect_activity(
                             )
         except httpx.HTTPStatusError as e:
             if e.response.status_code in (404, 422):
-                log.warning("Skipping reviews for %s (HTTP %d — token may lack access)", repo, e.response.status_code)
+                log.warning(
+                    "Skipping reviews for %s (HTTP %d — token may lack access)",
+                    repo,
+                    e.response.status_code,
+                )
             else:
                 log.exception("Error fetching reviews for %s", repo)
         except Exception:
@@ -398,13 +399,17 @@ def collect_activity(
                         state=item["state"],
                         created_at=item["created_at"],
                         body=item.get("body"),
-                        labels=[l["name"] for l in item.get("labels", [])],
+                        labels=[lb["name"] for lb in item.get("labels", [])],
                         comments=item.get("comments", 0),
                     )
                 )
         except httpx.HTTPStatusError as e:
             if e.response.status_code in (404, 422):
-                log.warning("Skipping issues for %s (HTTP %d — token may lack access)", repo, e.response.status_code)
+                log.warning(
+                    "Skipping issues for %s (HTTP %d — token may lack access)",
+                    repo,
+                    e.response.status_code,
+                )
             else:
                 log.exception("Error fetching issues for %s", repo)
         except Exception:
@@ -415,9 +420,7 @@ def collect_activity(
             comments = _fetch_issue_comments_by_user(token, repo, username, since)
             # Filter to within the until boundary
             for c in comments:
-                created_at = datetime.fromisoformat(
-                    c["created_at"].replace("Z", "+00:00")
-                )
+                created_at = datetime.fromisoformat(c["created_at"].replace("Z", "+00:00"))
                 if created_at > until:
                     continue
                 # Get the issue title from the issue_url
@@ -439,7 +442,11 @@ def collect_activity(
                 )
         except httpx.HTTPStatusError as e:
             if e.response.status_code in (404, 422):
-                log.warning("Skipping issue comments for %s (HTTP %d — token may lack access)", repo, e.response.status_code)
+                log.warning(
+                    "Skipping issue comments for %s (HTTP %d — token may lack access)",
+                    repo,
+                    e.response.status_code,
+                )
             else:
                 log.exception("Error fetching issue comments for %s", repo)
         except Exception:
@@ -447,9 +454,7 @@ def collect_activity(
 
         # --- Discussions ---
         try:
-            disc_created, disc_commented = _fetch_discussions(
-                token, repo, username, since, until
-            )
+            disc_created, disc_commented = _fetch_discussions(token, repo, username, since, until)
             activity.discussions_created.extend(disc_created)
             activity.discussion_comments.extend(disc_commented)
         except Exception:
